@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible"
+        content="ie=edge">
+  <script src="./dict.js"></script>
+  <title>Autocomplete</title>
+</head>
+
+<body>
+  <textarea id="autocomplete">
+  </textarea>
+  <script>
+    const field = document.getElementById('autocomplete');
+
+    field.addEventListener('input', updateValue);
+    let store;
+
+    const setStore = (value) => store = value;
+
+    function updateValue(e) {
+      const delimiter = e.target.value.slice(-1)
+      if (delimiter !== " ") {
+        return;
+      }
+      const split = e.target.value.split(' ');
+      const replace = split.map(value => {
+        if (dictionary[value] !== undefined) {
+          const getFirst = dictionary[value].split(' ');
+          return getFirst[0];
+        } else {
+          return value;
+        }
+      });
+      const output = replace.join(" ");
+      field.value = setStore(output);
+    }
+  </script>
+</body>
+
+</html>
